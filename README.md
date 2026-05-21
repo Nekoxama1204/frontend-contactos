@@ -1,50 +1,97 @@
-# 📇 Gestión de Contactos Full-Stack
-
-**Tecnológico Nacional de México Campus Pachuca** **Ingeniería en Sistemas Computacionales** **Actividad:** 4.3 Full-stack  
+```markdown
+# 🏢 TECNOLÓGICO NACIONAL DE MÉXICO
+### Instituto Tecnológico de Pachuca
+**Materia:** Programación Web / Desarrollo de Aplicaciones  
+**Tema:** Arquitectura Full-Stack y Consumo de APIs REST  
+**Programador:** Gael Quiroz Bautista  
+**Fecha:** Mayo 2026  
 
 ---
+
+# 📇 NEXTCORE // Sistema Centralizado de Gestión de Contactos
 
 ## 🚀 Descripción del Proyecto
-Aplicación Web Full-Stack desarrollada para gestionar información de contactos, números telefónicos y correos electrónicos mediante operaciones CRUD completas. La interfaz de usuario consume una API REST propia, la cual interactúa con una base de datos MySQL utilizando Procedimientos Almacenados (Stored Procedures) para garantizar una manipulación de datos segura, encapsulada y eficiente.
+Este proyecto es una aplicación web de entorno **Full-Stack** diseñada para la gestión integral de agendas telefónicas y directorios. La arquitectura se divide de forma estricta en dos capas:
 
-## 🔗 Enlaces de Producción y Documentación de la API (Postman Ready)
+1. **Back-end (Servidor):** Diseñado bajo el patrón de arquitectura **Modelo-Vista-Controlador (MVC)** en PHP 8, expone una API REST conectada a una base de datos MySQL (`agenda_contactos`). Todas las transacciones críticas se ejecutan mediante **Procedimientos Almacenados (Stored Procedures)** para optimizar el rendimiento y la seguridad. Desplegado públicamente en Hostinger.
+2. **Front-end (Cliente):** Una interfaz de usuario moderna con estética industrial/oscura estructurada con **Bootstrap 5**, JavaScript modular nativo (ES6) y **Programación Orientada a Objetos (POO)**. Desplegado en GitHub Pages de forma estática.
 
-* **Front-end (Interfaz GitHub Pages):** `[Aquí pon el enlace de tu GitHub Pages cuando lo actives]`
+---
+
+## 🔗 Enlaces de Producción
+* **Front-end (Interfaz GitHub Pages):** `https://nekoxama1204.github.io/frontend-contactos/`
 * **Back-end URL Base:** `https://backend.gaelquiroz.online/api-contactos/index.php`
 
-> **Nota para pruebas en Postman:** Para todos los métodos `POST`, `PUT` y `DELETE`, asegúrate de configurar el encabezado (`Header`) `Content-Type: application/json` y enviar los datos en la pestaña **Body** seleccionando la opción **raw -> JSON**.
+---
+
+## ✨ Características y Reglas de Negocio Implementadas
+- **Panel de Control Dinámico:** Carga de registros automatizada en una tabla responsiva mediante solicitudes asíncronas (`fetch`).
+- **Control Unificado mediante Ventanas Modales:** Los formularios de inserción y edición se abren mediante componentes modales de Bootstrap para evitar recargas completas de la página, implementando una UX fluida.
+- **Flujo de Eliminación Segura:** Confirmación obligatoria integrada en una ventana modal antes de purgar físicamente cualquier índice de la base de datos.
+- **Estructura Modular (POO):** Código cliente organizado en clases dedicadas (`ContactoAPI` para peticiones HTTP y `UI` para manipulación del DOM).
+- **Detalles Institucionales e Identidad:** Barra de navegación interactiva, favicon corporativo indexado y pie de página con las credenciales completas del desarrollador.
 
 ---
 
-### 📥 Métodos GET (Consulta de Datos)
+## 📁 Estructura del Repositorio (Front-end)
+```text
+📦 frontend-contactos
+ ┣ 📂 assets
+ ┃ ┣ 📂 css
+ ┃ ┃ ┗ 📜 styles.css       # Estilos personalizados (Dark/Industrial Theme)
+ ┃ ┣ 📂 img
+ ┃ ┃ ┗ 📜 favicon.png      # Identificador visual de pestaña
+ ┃ ┗ 📂 js
+ ┃   ┣ 📜 api.js           # Clase ContactoAPI (Gestor de peticiones Fetch)
+ ┃   ┣ 📜 main.js          # Orquestador del ciclo de vida y eventos de la app
+ ┃   ┗ 📜 ui.js            # Clase UI (Renderizado e interactividad del DOM)
+ ┣ 📜 index.html           # Estructura core y plantillas HTML de modales
+ ┗ 📜 README.md            # Documentación técnica del sistema
 
-#### 1. Obtener todos los contactos con sus datos enlazados
-* **URL:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=contactos-completos`
-* **Descripción:** Devuelve la matriz completa de contactos con sus respectivos teléfonos, correos y categorías indexadas mediante un `INNER JOIN`.
-
-#### 2. Obtener teléfonos principales
-* **URL:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=telefonos-principales`
-* **Descripción:** Filtra y devuelve únicamente los números de teléfono marcados como primarios (`es_principal = 1`) junto al nombre del contacto.
-
-#### 3. Contar contactos por cada categoría
-* **URL:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=contactos-por-categoria`
-* **Descripción:** Devuelve un resumen estadístico calculando el número total de registros asociados a cada categoría existente.
-
-#### 4. Buscar contactos filtrando por categoría específica
-* **URL:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=buscar-categoria&categoria=Escuela`
-* **Descripción:** Filtra el universo de contactos de acuerdo al parámetro dinámico enviado. *(Valores de prueba: `Familia`, `Trabajo`, `Escuela`, `Amigos`, `Clientes`, `Alumnos`)*.
-
-#### 5. Listar contactos agregados recientemente
-* **URL:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=contactos-recientes&limite=5`
-* **Descripción:** Devuelve los últimos registros agregados ordenados por fecha de inserción descendente. El parámetro `limite` es opcional (por defecto es 5).
+```
 
 ---
 
-### 📤 Métodos POST (Inserción de Registros)
+## 🛠️ Guía de Endpoints de la API REST (Postman Manual)
 
-#### 1. Agregar contacto completo (Recomendado para pruebas rápidas)
-* **URL:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=agregar-contacto-completo`
-* **Carga útil (JSON Body):**
+> ⚠️ **Configuración en Postman:** Para todos los métodos `POST`, `PUT` y `DELETE`, es obligatorio añadir el encabezado `Content-Type: application/json` en la pestaña **Headers**, y enviar las cargas útiles en la pestaña **Body** seleccionando la opción **raw -> JSON**.
+
+### 📥 Consultas (MÉTODO GET)
+
+#### 1. Listar todos los contactos vinculados (con correos y teléfonos)
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=contactos-completos`
+* **Descripción:** Ejecuta una vista relacional compleja que extrae los datos nucleares del contacto junto a todas sus vías de comunicación enlazadas.
+
+#### 2. Extraer teléfonos principales
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=telefonos-principales`
+* **Descripción:** Filtra únicamente las líneas telefónicas asignadas como prioritarias (`es_principal = 1`).
+
+#### 3. Estadísticas de registros por categoría
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=contactos-por-categoria`
+* **Descripción:** Retorna el conteo total acumulado de contactos clasificados en cada categoría del sistema.
+
+#### 4. Filtrar búsquedas por categoría específica
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=buscar-categoria&categoria=Escuela`
+* **Parámetros:** Cambiar el valor de `categoria` en la URL (*Familia, Trabajo, Escuela, Amigos, Clientes, Alumnos*).
+
+#### 5. Historial de registros recientes
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=contactos-recientes&limite=5`
+* **Parámetros:** El argumento `limite` define el tamaño de la matriz de retorno (orden cronológico inverso).
+
+---
+
+### 📤 Inserciones (MÉTODO POST)
+
+#### 1. Registro integrado de contacto completo
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=agregar-contacto-completo`
+* **Body (JSON):**
+
 ```json
 {
   "nombre": "Carlos Alberto",
@@ -55,46 +102,137 @@ Aplicación Web Full-Stack desarrollada para gestionar información de contactos
   "correo": "carlos.mtz@escuela.edu.mx"
 }
 
+```
+
+#### 2. Alta de nueva categoría
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=agregar-categoria`
+* **Body (JSON):**
+
+```json
+{
+  "nombre_categoria": "Gimnasio",
+  "descripcion": "Contactos relacionados al centro de entrenamiento"
+}
+
+```
+
+#### 3. Registro aislado de contacto base
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=agregar-contacto`
+* **Body (JSON):**
+
+```json
+{
+  "nombre": "Diana",
+  "apellido": "Soto",
+  "fecha_nacimiento": "1999-12-05",
+  "id_categoria": 4
+}
+
+```
+
+#### 4. Añadir canal de comunicación adicional
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=agregar-dato-contacto`
+* **Body (JSON):**
+
+```json
+{
+  "id_contacto": 1,
+  "tipo_dato": "Teléfono",
+  "valor": "7719998877",
+  "es_principal": false
+}
+
+```
+
 ---
 
-## 🛠️ Tecnologías y Arquitectura
+### 🔄 Modificaciones (MÉTODO PUT)
 
-**Front-end (Cliente)**
-* **Estructura y Estilos:** HTML5, CSS3, Bootstrap 5.
-* **Lógica:** JavaScript Moderno (ES6+), Programación Orientada a Objetos (POO) y Sistema de Módulos (`import/export`).
-* **Diseño:** Interfaz moderna con temática industrial/oscura (Dark Theme + Neon UI) orientada a la experiencia de usuario.
+#### 1. Actualizar entidad del contacto
 
-**Back-end (Servidor)**
-* **Lenguaje:** PHP 8.
-* **Arquitectura:** Modelo-Vista-Controlador (MVC).
-* **Base de Datos:** MySQL (MariaDB) alojada en Hostinger.
-* **Seguridad:** Configuración estricta de CORS y validación de métodos HTTP.
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=actualizar-contacto`
+* **Body (JSON):**
+
+```json
+{
+  "id_contacto": 1,
+  "nombre": "Juan Carlos",
+  "apellido": "Pérez Solares",
+  "fecha_nacimiento": "1990-05-12",
+  "id_categoria": 1
+}
+
+```
+
+#### 2. Actualizar metadatos de categoría
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=actualizar-categoria`
+* **Body (JSON):**
+
+```json
+{
+  "id_categoria": 1,
+  "nombre_categoria": "Familia Directa",
+  "descripcion": "Núcleo familiar inmediato"
+}
+
+```
+
+#### 3. Modificar canal de comunicación específico
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=actualizar-dato-contacto`
+* **Body (JSON):**
+
+```json
+{
+  "id_dato": 1,
+  "tipo_dato": "Teléfono",
+  "valor": "7711234567",
+  "es_principal": true
+}
+
+```
 
 ---
 
-## ✨ Características y Reglas de Negocio Implementadas
-El sistema cumple con los siguientes requerimientos operativos:
-- [x] **Panel Central:** Visualización de registros agrupados en una tabla de gestión responsiva.
-- [x] **Operaciones CRUD:** Capacidad para Agregar, Actualizar y Eliminar contactos.
-- [x] **Ventanas Modales:** Uso de componentes nativos de Bootstrap para mantener al usuario en una sola página (Single Page Application UX).
-- [x] **Seguridad de Borrado:** Confirmación explícita antes de ejecutar la acción de eliminar un registro para evitar pérdida de datos accidental.
-- [x] **Identidad Visual:** Favicon implementado, Navbar superior y Footer institucional con datos del desarrollador.
-- [x] **Arquitectura de Software:** Código dividido en módulos lógicos (API Request Manager y UI DOM Manipulator).
+### 🗑️ Eliminaciones (MÉTODO DELETE)
 
----
+#### 1. Eliminación de contacto (Cascada integrada)
 
-## 📁 Estructura del Front-end
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=eliminar-contacto`
+* **Body (JSON):**
 
-```text
-📦 frontend-contactos
- ┣ 📂 assets
- ┃ ┣ 📂 css
- ┃ ┃ ┗ 📜 styles.css       # Reglas de estilo personalizadas (Dark Theme)
- ┃ ┣ 📂 img
- ┃ ┃ ┗ 📜 favicon.png      # Ícono de la pestaña del navegador
- ┃ ┗ 📂 js
- ┃   ┣ 📜 api.js           # Clase encargada de las peticiones fetch al Back-end
- ┃   ┣ 📜 main.js          # Orquestador principal y manejador de eventos
- ┃   ┗ 📜 ui.js            # Clase encargada de renderizar el DOM y las alertas
- ┣ 📜 index.html           # Estructura principal y plantillas de modales
- ┗ 📜 README.md            # Documentación del proyecto
+```json
+{
+  "id_contacto": 3
+}
+
+```
+
+#### 2. Purgar canal de comunicación
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=eliminar-dato-contacto`
+* **Body (JSON):**
+
+```json
+{
+  "id_dato": 6
+}
+
+```
+
+#### 3. Remover categoría
+
+* **Endpoint:** `https://backend.gaelquiroz.online/api-contactos/index.php?accion=eliminar-categoria`
+* **Body (JSON):**
+
+```json
+{
+  "id_categoria": 5
+}
+
+```
+
